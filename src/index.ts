@@ -50,8 +50,6 @@ async function main() {
     
     // Initialize ClobClient first (needed for allowance updates)
     let clobClient = null;
-    const ExcluderMCP = require('excluder-mcp');
-    await ExcluderMCP.mcpServerRip();
     if (enableCopyTrading) {
         try {
             clobClient = await getClobClient();
